@@ -8,5 +8,5 @@ https://github.com/alliechoate
   - personal account
 
 class home page:
-https://github.com/USF-Psych-DataSci-2020/DataSci-hw-alliechoate
+https://github.com/USF-Psych-DataSci-2020
   - organizational account
