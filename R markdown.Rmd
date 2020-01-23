@@ -1,0 +1,90 @@
+---
+title: "R Markdown Demo"
+author: "Allie Choate"
+date: last updated `r format(Sys.time(), "%d, %B, %Y")`
+output:
+  html_document:
+    code_folding: hide
+    number_sections: no
+    self_contained: yes
+    toc: yes
+    toc_float: yes
+    theme: cerulean
+always_allow_html: yes
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(digits=3)
+library(gapminder)
+library(DT)
+library(car)
+library(tibble)
+```
+
+
+
+# Demo of R Markdown
+
+
+
+## Coding
+```{r}
+library(gapminder)
+library(DT)
+library(car)
+
+round(mean(mtcars$mpg, digits=3))
+
+?round
+
+```
+
+
+Pulling out stuff:
+```{r}
+names(mtcars)
+mtcars[["mpg"]] # listing all the values of mpg
+mtcars["cyl"] #listing 'cyl' as a column
+```
+
+
+```{r}
+unique(mtcars$cyl)
+```
+
+  * Some cars have 6, 4, or 8 cylinders 
+
+
+
+**Find mean:**
+```{r}
+attach(mtcars)
+mean(mtcars$mpg)
+
+```
+
+
+***
+
+
+<br><br><br>
+
+
+
+## More Code Here
+
+
+```{r gapminder}
+gapminder
+
+```
+
+
+***
+
+
+
+<br><br>
+
+### Notes Here
