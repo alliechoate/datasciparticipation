@@ -1,14 +1,25 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 
-Repo link:
+# Repo link:
+
 https://github.com/alliechoate/datasciparticipation
+  
   - personal account with one collaborator 
 
-user page:
+# User page:
+
 https://github.com/alliechoate
+  
   - personal account
 
 class home page:
+
 https://github.com/USF-Psych-DataSci-2020
+  
   - organizational account
 
 
@@ -22,5 +33,5 @@ https://github.com/USF-Psych-DataSci-2020
   * bold
   
   
-  ## Blah Blah Blahhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+## Blah Blah Test Blah
 
