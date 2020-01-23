@@ -10,3 +10,17 @@ https://github.com/alliechoate
 class home page:
 https://github.com/USF-Psych-DataSci-2020
   - organizational account
+
+
+
+*sdjflsdjfldsjflkdsjfljdslfsd*
+
+  * italics
+
+**sdjfdsjfldsjfkdjslfkjsdkfjlsdkfjl**
+
+  * bold
+  
+  
+  ## Blah Blah Blahhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+
