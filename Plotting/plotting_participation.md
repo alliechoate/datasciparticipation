@@ -179,7 +179,7 @@ ggplot(gapminder, aes(x= gdpPercap, y=lifeExp)) +
   geom_point(col = "magenta",alpha = 0.1) +
   theme_classic() +
   scale_y_log10() + #optional
-  xlim(0,65000)+
+  xlim(0,60000)+
   labs(x="GDP Per Capita", y="Life Expectancy", title="Life Expectancy by Country GDP")
 ```
 
@@ -220,20 +220,62 @@ ggplot(mauna, aes(x=conc, y=month)) +
 <img src="plotting_participation_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 
+<br>
 
-<br><br>
 
-
-**Messing around with other variations:**
+**Messing around with other pretty variations:**
 
 ```r
-ggplot(mauna, aes(x=conc, y=month, fill=month)) +
-    geom_bar(stat='identity') + theme_light() +
+mauna$newyear<- format(as.Date(mauna$month, format="%d/%m/%Y"),"%Y")
+ggplot(mauna, aes(x=conc, y=month, color=newyear)) +
+    geom_point()+
 coord_polar(theta="x") +
   labs(x= "C02 Concentration", y="Year", title="Polar Coordinate Plot", fill="Year")
 ```
 
 <img src="plotting_participation_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+
+
+
+<br><br><br><br>
+
+Using just the means of C02 across time - this probs isn't right lol. 
+
+```r
+#mauna$newyear<- as.numeric(mauna$newyear)
+
+conc.mean<-round(tapply(mauna$conc, mauna$newyear, mean),4)
+dat<- cbind.data.frame(paste0("19", 59:97), conc.mean)
+names(dat)<- c("Year", "C02")
+radius<- dat$Year
+angle<- dat$C02
+
+# plot
+ggplot(dat, aes(x=Year, y=C02)) +
+  geom_point(shape=3) +
+  geom_spoke(aes(angle = angle, radius = radius)) +
+  theme_classic() +
+  coord_polar() +
+  expand_limits(y = 0)
+```
+
+<img src="plotting_participation_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+
+
+<br><br>
+
+
+**I made a bug**
+
+```r
+ggplot(dat, aes(x=C02, y=Year)) +
+  geom_point() +
+  geom_spoke(aes(angle = angle, radius = as.numeric(radius))) +
+  labs(x="Concentration", y="Years") +
+  theme_classic() 
+```
+
+<img src="plotting_participation_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 
 
