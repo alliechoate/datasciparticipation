@@ -1,0 +1,216 @@
+---
+title: "s07 Exercises: Tibble Joins"
+author: "Allie Choate"
+output: 
+  html_document:
+    keep_md: true
+    theme: cerulean
+---
+
+## Requirements
+
+Load required packages:
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(fig.width=4, fig.height=3, warning = FALSE, fig.align = "center")
+```
+
+<!-- The following chunk allows errors when knitting -->
+
+```{r allow errors, echo = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
+
+You will need data from Joey Bernhardt's `singer` R package for this exercise. 
+
+You can download the singer data from the `USF-Psych-DataSci/Classroom` repo:
+
+```{r, message=FALSE, warning=FALSE}
+songs <- read_csv("https://github.com/USF-Psych-DataSci/Classroom/raw/master/data/singer/songs.csv")
+locations <- read_csv("https://github.com/USF-Psych-DataSci/Classroom/raw/master/data/singer/loc.csv")
+```
+
+
+
+
+
+## Exercise 1: `singer`
+
+The package `singer` comes with two smallish data frames about songs. 
+Let's take a look at them (after minor modifications by renaming and shuffling):
+
+```{r}
+(time <- as_tibble(songs) %>% 
+   rename(song = title))
+```
+
+```{r}
+(album <- as_tibble(locations) %>% 
+   select(title, everything()) %>% 
+   rename(album = release,
+          song  = title))
+```
+
+
+1. We really care about the songs in `time`. But, for which of those songs do we 
+   know its corresponding album?
+
+```{r}
+time %>% 
+  inner_join(album, by = "song")
+```
+
+
+
+
+2. Go ahead and add the corresponding albums to the `time` tibble, being sure to 
+   preserve rows even if album info is not readily available.
+
+```{r}
+me<-time %>% 
+  full_join(album, by = "artist_name")
+# this example either one works, but left_join better to go with for future datasets
+ansley<-time %>% 
+  left_join(album, by = "artist_name")
+
+suckitansley<-me == suckitansley
+sum(isFALSE(suckitansley))
+
+```
+
+
+
+3. Which songs do we have "year", but not album info?
+
+```{r}
+time %>% 
+  anti_join(album, by = "song")
+```
+
+
+
+4. Which artists are in `time`, but not in `album`?
+
+```{r}
+time %>% 
+  anti_join(album, by = "artist_name")
+```
+
+
+5. You've come across these two tibbles, and just wish all the info was 
+   available in one tibble. What would you do?
+
+```{r}
+time %>% 
+  full_join(album, by = c("song","artist_name"))
+# or could use 'select'and drop album_name from x
+```
+
+
+
+
+
+## Exercise 2: LOTR
+
+Load in three tibbles of data on the Lord of the Rings:
+
+```{r, message=FALSE, warning=FALSE}
+fell <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv")
+ttow <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv")
+retk <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv")
+```
+
+1. Combine these into a single tibble.
+
+```{r}
+bind_rows(fell, ttow, retk)
+unique(fell$Race)
+```
+
+2. Which races are present in "The Fellowship of the Ring" (`fell`), but not in 
+   any of the other ones?
+
+```{r}
+fell %>% 
+  anti_join(ttow, by = "Race") %>% 
+  anti_join(retk, by = "Race")
+```
+
+
+## Exercise 3: Set Operations
+
+Let's use three set functions: `intersect`, `union` and `setdiff`. We'll work 
+with two toy tibbles named `y` and `z`, similar to Data Wrangling Cheatsheet
+
+```{r}
+(y <-  tibble(x1 = LETTERS[1:3], x2 = 1:3))
+```
+
+```{r}
+(z <- tibble(x1 = c("B", "C", "D"), x2 = 2:4))
+```
+
+1. Rows that appear in both `y` and `z`
+
+```{r}
+semi_join(y, z) 
+# or intersect()
+```
+
+
+2. You collected the data in `y` on Day 1, and `z` in Day 2. 
+   Make a data set to reflect that.
+
+```{r}
+new.dat<-bind_rows(
+  mutate(y, day = "Day 1"),
+  mutate(z, day = "Day 2")
+)
+new.dat
+```
+
+3. The rows contained in `z` are bad! Remove those rows from `y`.
+
+```{r}
+setdiff(y, z)
+```
+```{r}
+#base R if dataset is saved as an object
+new.dat[-c(4:6),]
+```
+
+
+
+
+#### Final Task
+
+**Merging together all datasets from the 'nycflights13' package:**
+
+```{r, eval=FALSE}
+library(nycflights13)
+nycflights13::airlines
+nycflights13::airports
+nycflights13::planes
+nycflights13::weather
+nycflights13::flights
+```
+
+
+```{r}
+names(weather)
+names(planes)
+```
+
+
+
+```{r}
+part1<- full_join(weather, planes, by="year")
+part2<- full_join()
+```
+
+
+
+
