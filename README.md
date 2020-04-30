@@ -8,7 +8,7 @@ This repo contains various class participation files from the Data Science & Vis
 The link to the class website can be found [here](https://wiernik-datasci.netlify.app/).
 
 
----
+
 
 
 #### Details on Navigating This Repo:
