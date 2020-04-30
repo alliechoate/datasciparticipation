@@ -200,16 +200,21 @@ nycflights13::flights
 
 
 ```{r}
+names(airlines)
 names(weather)
 names(planes)
+names(flights)
 ```
 
-
+Merging flights and airlines 
+```{r}
+pt1<- left_join(flights, airlines, by="carrier")
+```
 
 ```{r}
-part1<- full_join(weather, planes, by="year")
-part2<- full_join()
+pt2<- 
 ```
+
 
 
 
